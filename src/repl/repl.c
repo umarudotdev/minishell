@@ -1,6 +1,7 @@
 #include "repl.h"
 
 #include <stdio.h>
+//
 #include <readline/history.h>
 #include <readline/readline.h>
 #include <stdbool.h>
@@ -9,8 +10,7 @@
 
 #include "ast/ast.h"
 #include "environment/environment.h"
-#include "ft_stdlib.h"
-#include "ft_string.h"
+#include "evaluator/evaluator.h"
 #include "lexer/lexer.h"
 #include "minishell.h"
 #include "parser/parser.h"
@@ -49,12 +49,18 @@ static void process_input(const char *input, t_hashmap *environment) {
   t_ast *ast = parser_parse(parser);
 
   if (ast) {
-    // Print the AST for now
+    // Print the AST for debugging purposes
     ast_print(ast);
 
-    // TODO: Add command evaluation
-    (void)environment;
-    // evaluator_evaluate(ast, environment);
+    // Evaluate the AST
+    int status = evaluator_evaluate(ast, environment);
+
+    // Optionally store the status in the environment
+    char status_str[16];
+    snprintf(status_str, sizeof(status_str), "%d", status);
+    char key_value[32];
+    snprintf(key_value, sizeof(key_value), "?=%s", status_str);
+    environment_set(environment, key_value);
 
     ast_free(ast);
   }
