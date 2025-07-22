@@ -1,0 +1,10 @@
+#ifndef MINISHELL_H
+#define MINISHELL_H
+
+#define MINISHELL_NAME "minishell"
+#define MINISHELL_VERSION_MAJOR 0
+#define MINISHELL_VERSION_MINOR 0
+#define MINISHELL_VERSION_PATCH 1
+#define MINISHELL_VERSION "0.0.1"
+
+#endif
